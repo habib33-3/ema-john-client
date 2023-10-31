@@ -12,7 +12,7 @@ import { Link, useLoaderData } from "react-router-dom";
 const Shop = () => {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
-  const [itemsPerPage, setItemPerPage] = useState(10);
+  const [itemsPerPage, setItemPerPage] = useState(9);
   const [currentPage, setCurrentPage] = useState(0);
   const { count } = useLoaderData();
   //   const itemsPerPage = 10;
@@ -26,10 +26,12 @@ const Shop = () => {
   const pages = [...Array(numberOfPages).keys()];
 
   useEffect(() => {
-    fetch("http://localhost:5000/products")
+    fetch(
+      `http://localhost:5000/products?page=${currentPage}&size=${itemsPerPage}}`
+    )
       .then((res) => res.json())
       .then((data) => setProducts(data));
-  }, []);
+  }, [currentPage, itemsPerPage]);
 
   useEffect(() => {
     const storedCart = getShoppingCart();
@@ -129,11 +131,11 @@ const Shop = () => {
           value={itemsPerPage}
           onChange={handleItemPerPage}
         >
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="20">20</option>
-          <option value="30">30</option>
-          <option value="50">50</option>
+          <option value="9">9</option>
+          <option value="18">18</option>
+          <option value="27">27</option>
+          <option value="36">36</option>
+          <option value="45">45</option>
         </select>
       </div>
     </div>
