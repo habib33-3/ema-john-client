@@ -31,6 +31,10 @@
   margin-bottom: 40px;
 }
 
-.pagination button{
-    margin-right: 10px;
+.pagination button {
+  margin-right: 10px;
+}
+
+.pagination .selected {
+  background-color: #ff9900;
 }

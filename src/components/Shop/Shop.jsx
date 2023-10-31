@@ -13,6 +13,7 @@ const Shop = () => {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const [itemsPerPage, setItemPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(0);
   const { count } = useLoaderData();
   //   const itemsPerPage = 10;
   const numberOfPages = Math.ceil(count / itemsPerPage);
@@ -75,6 +76,11 @@ const Shop = () => {
     deleteShoppingCart();
   };
 
+  const handleItemPerPage = (e) => {
+    setItemPerPage(parseInt(e.target.value));
+    setCurrentPage(0);
+  };
+
   return (
     <div className="shop-container">
       <div className="products-container">
@@ -100,14 +106,28 @@ const Shop = () => {
         </Cart>
       </div>
       <div className="pagination">
+        {currentPage > 0 && (
+          <button onClick={() => setCurrentPage(currentPage - 1)}>
+            Previous
+          </button>
+        )}
         {pages?.map((page) => (
-          <button key={page}>{page}</button>
+          <button
+            className={currentPage === page ? "selected" : ""}
+            onClick={() => setCurrentPage(page)}
+            key={page}
+          >
+            {page}
+          </button>
         ))}
+        {currentPage < pages.length - 1 && (
+          <button onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
+        )}
         <select
           name=""
           id=""
           value={itemsPerPage}
-          onChange={(e) => setItemPerPage(parseInt(e.target.value))}
+          onChange={handleItemPerPage}
         >
           <option value="5">5</option>
           <option value="10">10</option>
